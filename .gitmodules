@@ -1,0 +1,6 @@
+[submodule "variants/wiieva-variant"]
+	path = variants/wiieva
+	url = https://github.com/wiieva/wiieva-variant
+[submodule "libraries/uGFX"]
+	path = libraries/uGFX
+	url = https://git.ugfx.io/olegator77/uGFX.git
