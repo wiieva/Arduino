@@ -77,8 +77,7 @@ extern "C" void wiieva_lcd_write_data_buf (uint16_t *data,int cnt) {
 
 extern "C" void wiieva_lcd_set_backlight (uint16_t percent) {
 	pinMode (WIIEVA_LCD_BK,OUTPUT);
-//	analogWrite (WIIEVA_LCD_BK,percent*255/100);
-	digitalWrite (WIIEVA_LCD_BK,1);
+	analogWrite (WIIEVA_LCD_BK,percent*255/100);
 }
 
 extern "C" void wiieva_lcd_read_input (AIO_InputState *input_state) {

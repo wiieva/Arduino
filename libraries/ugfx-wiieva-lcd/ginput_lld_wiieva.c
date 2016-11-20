@@ -4,10 +4,11 @@
 #if GFX_USE_GINPUT && GINPUT_NEED_MOUSE
 
 #define GMOUSE_DRIVER_VMT		GMOUSEVMT_MCU
-#include "ginput/ginput_driver_mouse.h"
+#include "src/ginput/ginput_driver_mouse.h"
 
 void wiieva_lcd_read_input (AIO_InputState *input_state);
 static bool_t init_board(GMouse *m, unsigned driverinstance) {
+
 }
 
 static bool_t read_xyz(GMouse *m, GMouseReading *prd) {
@@ -32,14 +33,12 @@ static bool_t read_xyz(GMouse *m, GMouseReading *prd) {
 #define GMOUSE_MCU_Z_TOUCHOFF               500
 #define GMOUSE_MCU_BOARD_DATA_SIZE          0
 
-
 void calsave (GMouse *m, const void *buf, size_t sz)
 {
     GMouseCalibration *c = (GMouseCalibration *)buf;
     ets_printf( "cal ax=%d,bx=%d,cx=%d,ay=%d,by=%d,cy=%d\r\n",(int)(c->ax*10000.0),
     (int)(c->bx*10000.0),(int)(c->cx*10000.0),(int)(c->ay*10000.0),(int)(c->by*10000.0),(int)(c->cy*10000.0));
-}       
-
+}
 
 bool_t calload (GMouse *m, void *buf, size_t sz)
 {
@@ -51,9 +50,7 @@ bool_t calload (GMouse *m, void *buf, size_t sz)
     c->by=0.0703;
     c->cy=-16.8264;
     return TRUE;
-}       
-
-
+}
 
 const GMouseVMT GMOUSE_DRIVER_VMT[1] = {{
     {
@@ -88,7 +85,7 @@ const GMouseVMT GMOUSE_DRIVER_VMT[1] = {{
 #if GFX_USE_GINPUT && GINPUT_NEED_KEYBOARD
 
 #define GKEYBOARD_DRIVER_VMT            GKEYBOARDVMT_WIIEVA
-#include "ginput/ginput_driver_keyboard.h"
+#include "src/ginput/ginput_driver_keyboard.h"
 
 static bool_t keyboard_init(GKeyboard *k, unsigned driverinstance) 
 {
@@ -115,7 +112,7 @@ static int keyboard_getgata(GKeyboard *k, uint8_t *pch, int sz)
 
     if (!changed_keys)
         return 0;
-    
+
     for (i = 0; i < 16; ++i)
         if (changed_keys & (1<<i)) {
             switch (i) {
