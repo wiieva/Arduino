@@ -72,6 +72,9 @@
             },
 			{
               "name": "ESPDuino"
+            },
+            {
+              "name": "Wiieva"
             }
           ],
           "toolsDependencies": [
