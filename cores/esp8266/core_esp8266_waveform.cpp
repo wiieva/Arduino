@@ -244,11 +244,15 @@ static ICACHE_RAM_ATTR void timer1Interrupt() {
           if (expiryToGo < 0) {
               // Done, remove!
               waveformEnabled &= ~mask;
+#ifdef ESP8266_WAVEFORM_BY_DIGITALWRITE
+              digitalWrite (i,0);
+#else
               if (i == 16) {
                 GP16O &= ~1;
               } else {
                 ClearGPIO(mask);
               }
+#endif
               continue;
             }
         }
@@ -258,19 +262,27 @@ static ICACHE_RAM_ATTR void timer1Interrupt() {
         if (cyclesToGo < 0) {
           waveformState ^= mask;
           if (waveformState & mask) {
+#ifdef ESP8266_WAVEFORM_BY_DIGITALWRITE
+            digitalWrite (i,1);
+#else
             if (i == 16) {
               GP16O |= 1; // GPIO16 write slow as it's RMW
             } else {
               SetGPIO(mask);
             }
+#endif
             wave->nextServiceCycle = now + wave->nextTimeHighCycles;
             nextEventCycles = min_u32(nextEventCycles, wave->nextTimeHighCycles);
           } else {
+#ifdef ESP8266_WAVEFORM_BY_DIGITALWRITE
+            digitalWrite (i,0);
+#else
             if (i == 16) {
               GP16O &= ~1; // GPIO16 write slow as it's RMW
             } else {
               ClearGPIO(mask);
             }
+#endif
             wave->nextServiceCycle = now + wave->nextTimeLowCycles;
             nextEventCycles = min_u32(nextEventCycles, wave->nextTimeLowCycles);
           }
